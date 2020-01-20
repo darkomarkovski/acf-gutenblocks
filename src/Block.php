@@ -68,7 +68,7 @@ class Block
      * @since 0.1.0
      * @var string $mode
      */
-    protected $mode = 'preview';
+    protected $mode = 'auto';
 
     /**
      * The block alignment class.
@@ -85,6 +85,14 @@ class Block
      * @var array $supports
      */
     protected $supports = [];
+
+    /**
+     * Styles supported by the block.
+     *
+     * @since darko
+     * @var array $styles
+     */
+    protected $styles = [];
 
     /**
      * The blocks directory path.
@@ -120,6 +128,7 @@ class Block
         $this->enabled = $settings['enabled'] ?? true;
         $this->dir     = $settings['dir'] ?? $directory_path;
         $this->icon    = $settings['icon'] ?? apply_filters('acf_gutenblocks/default_icon', 'admin-generic');
+        $this->styles  = $settings['styles'] ?? [];
 
         $settings = apply_filters('acf_gutenblocks/block_settings', [
             'title'       => $settings['title'],
@@ -285,6 +294,17 @@ class Block
     }
 
     /**
+     * Get styles supported by the block
+     *
+     * @since darko
+     * @return array
+     */
+    public function getStyles(): array
+    {
+        return $this->styles;
+    }
+
+    /**
      * Get the block registration data
      *
      * @since 0.1.0
@@ -303,6 +323,7 @@ class Block
             'mode' => $this->getMode(),
             'align' => $this->getAlignment(),
             'supports' => $this->getSupports(),
+            'styles' => $this->getStyles(),
         ];
     }
 
